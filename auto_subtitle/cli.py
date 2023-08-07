@@ -59,7 +59,9 @@ def main():
         return
 
     if sub_loc == "below":
-        font_size = "16"
+        font_size = "12"
+
+    print(font_size)
     
     for path, srt_path in subtitles.items():
         out_path = os.path.join(output_dir, f"{filename(path)}.mp4")
@@ -70,7 +72,7 @@ def main():
         audio = video.audio
 
         ffmpeg.concat(
-            video.filter('subtitles', srt_path, force_style="Fontsize={},Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&".format(font_size)), audio, v=1, a=1
+            video.filter('subtitles', srt_path, force_style="Fontsize={},Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&,Alignment=0, MarginV=50".format(font_size)), audio, v=1, a=1
         ).output(out_path).run(quiet=True, overwrite_output=True)
 
         print(f"Saved subtitled video to {os.path.abspath(out_path)}.")
