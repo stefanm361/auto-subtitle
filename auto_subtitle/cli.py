@@ -35,7 +35,6 @@ def main():
     srt_only: bool = args.pop("srt_only")
     language: str = args.pop("language")
     
-    
     os.makedirs(output_dir, exist_ok=True)
 
     if model_name.endswith(".en"):
@@ -64,7 +63,7 @@ def main():
         audio = video.audio
 
         ffmpeg.concat(
-            video.filter('subtitles', srt_path, force_style="Fontsize=22,Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&", audio, v=1, a=1
+            video.filter('subtitles', srt_path, force_style="Fontsize=22,Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&"), audio, v=1, a=1
         ).output(out_path).run(quiet=True, overwrite_output=True)
 
         print(f"Saved subtitled video to {os.path.abspath(out_path)}.")
