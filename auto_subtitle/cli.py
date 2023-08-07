@@ -22,6 +22,8 @@ def main():
                         help="only generate the .srt file and not create overlayed video")
     parser.add_argument("--verbose", type=str2bool, default=False,
                         help="whether to print out the progress and debug messages")
+    parser.add_argument("--sub_loc", type=str, default="above", choices=["above","below"], 
+                        help="Subtitle location relative to splitscreen. Adjusts font size accordingly")
 
     parser.add_argument("--task", type=str, default="transcribe", choices=[
                         "transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
@@ -34,6 +36,7 @@ def main():
     output_srt: bool = args.pop("output_srt")
     srt_only: bool = args.pop("srt_only")
     language: str = args.pop("language")
+    sub_loc: str = args.pop("sub_loc")
     
     os.makedirs(output_dir, exist_ok=True)
 
