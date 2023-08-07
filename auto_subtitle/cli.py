@@ -57,7 +57,10 @@ def main():
     if srt_only:
         return
 
-    print(f"Selected location: {sub_loc}")
+    if sub_loc == "above":
+        print("Selected location: above")
+    else:
+        print("Selected location: below")
     
     for path, srt_path in subtitles.items():
         out_path = os.path.join(output_dir, f"{filename(path)}.mp4")
