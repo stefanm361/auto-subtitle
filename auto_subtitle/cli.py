@@ -53,13 +53,13 @@ def main():
     subtitles = get_subtitles(
         audios, output_srt or srt_only, output_dir, lambda audio_path: model.transcribe(audio_path, **args)
     )
-    font_size = "22"
+    font_size = 22
 
     if srt_only:
         return
 
     if sub_loc == "below":
-        font_size = 12
+        font_size = 10
 
     print(font_size)
     
@@ -72,7 +72,7 @@ def main():
         audio = video.audio
 
         ffmpeg.concat(
-            video.filter('subtitles', srt_path, force_style="Fontsize={},Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&,Alignment=0,MarginL=250 MarginV=500".format(font_size)), audio, v=1, a=1
+            video.filter('subtitles', srt_path, force_style="Fontsize={},Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&,Alignment=10".format(font_size)), audio, v=1, a=1
         ).output(out_path).run(quiet=True, overwrite_output=True)
 
         print(f"Saved subtitled video to {os.path.abspath(out_path)}.")
