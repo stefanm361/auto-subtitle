@@ -27,6 +27,7 @@ def main():
                         "transcribe", "translate"], help="whether to perform X->X speech recognition ('transcribe') or X->English translation ('translate')")
     parser.add_argument("--language", type=str, default="auto", choices=["auto","af","am","ar","as","az","ba","be","bg","bn","bo","br","bs","ca","cs","cy","da","de","el","en","es","et","eu","fa","fi","fo","fr","gl","gu","ha","haw","he","hi","hr","ht","hu","hy","id","is","it","ja","jw","ka","kk","km","kn","ko","la","lb","ln","lo","lt","lv","mg","mi","mk","ml","mn","mr","ms","mt","my","ne","nl","nn","no","oc","pa","pl","ps","pt","ro","ru","sa","sd","si","sk","sl","sn","so","sq","sr","su","sv","sw","ta","te","tg","th","tk","tl","tr","tt","uk","ur","uz","vi","yi","yo","zh"], 
     help="What is the origin language of the video? If unset, it is detected automatically.")
+    parser.add_argument("--sub_location", type=str, default="above", choices=["above", "below"], help="Location of the subtitles relative to a splitscreen break; if above: subtitles above the splitscreen, if below: subtitles below the splitscreen")
 
     args = parser.parse_args().__dict__
     model_name: str = args.pop("model")
@@ -34,6 +35,7 @@ def main():
     output_srt: bool = args.pop("output_srt")
     srt_only: bool = args.pop("srt_only")
     language: str = args.pop("language")
+    sub_location: str = args.pop("sub_location")
     
     os.makedirs(output_dir, exist_ok=True)
 
@@ -54,6 +56,11 @@ def main():
     if srt_only:
         return
 
+    if sub_location == "above":
+        font_size = 22
+    else:
+        font_size = 16
+
     for path, srt_path in subtitles.items():
         out_path = os.path.join(output_dir, f"{filename(path)}.mp4")
 
@@ -63,7 +70,7 @@ def main():
         audio = video.audio
 
         ffmpeg.concat(
-            video.filter('subtitles', srt_path, force_style="Fontsize=22,Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&"), audio, v=1, a=1
+            video.filter('subtitles', srt_path, force_style=f"Fontsize={font_size},Fontname=Helvetica-Bold,PrimaryColour=&H00FFFF&", audio, v=1, a=1
         ).output(out_path).run(quiet=True, overwrite_output=True)
 
         print(f"Saved subtitled video to {os.path.abspath(out_path)}.")
