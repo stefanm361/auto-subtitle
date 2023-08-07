@@ -56,13 +56,6 @@ def main():
     if srt_only:
         return
 
-    print(sub_location)
-    if sub_location == "above":
-        font_size = "22"
-    else:
-        font_size = "16"
-    print(font_size)
-
     for path, srt_path in subtitles.items():
         out_path = os.path.join(output_dir, f"{filename(path)}.mp4")
 
