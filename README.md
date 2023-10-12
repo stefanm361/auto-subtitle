@@ -1,7 +1,6 @@
 # Automatic subtitles in your videos
 
-This repository uses `ffmpeg` and [OpenAI's Whisper](https://openai.com/blog/whisper) to automatically generate and overlay subtitles on any video. Also uses m1guelpf's auto-subtitle repository (https://github.com/m1guelpf/auto-subtitle) with minor changes to subtitle style.
-
+This repository uses `ffmpeg` and [OpenAI's Whisper](https://openai.com/blog/whisper) to automatically generate and overlay subtitles on any video. 
 ## Installation
 
 To get started, you'll need Python 3.7 or newer. Install the binary by running the following command:
